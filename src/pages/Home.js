@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {
 DndContext,closestCenter
 } from "@dnd-kit/core";
-import {arrayMove, SortableContext, rectSortingStrategy} from "@dnd-kit/sortable";
+import {arrayMove, SortableContext, rectSortingStrategy,verticalListSortingStrategy} from "@dnd-kit/sortable";
 import { useEffect, useState } from 'react';
 import styled from "styled-components";
 import SortableItem from '../components/SortableItem';
@@ -100,7 +100,7 @@ function Home() {
             <Container>
               <SortableContext
                 items={filterImages().map((image) => image.id)}
-                strategy={rectSortingStrategy}
+                strategy={verticalListSortingStrategy}
               >
                 {filterImages().map((image) => (
                   <SortableItem key={image.id} id={image.id} image={image.previewURL} tags={image.tags} />
@@ -121,6 +121,16 @@ const Container = styled.div`
   margin: 2rem;
   justify-items: center; /* Horizontally center items */
   align-content: flex-start; /* Vertically align items at the top */
+
+  @media screen and (max-width:600px ){
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    grid-gap: 2rem;
+    margin: 2.5rem;
+    justify-items: center; /* Horizontally center items */
+    align-content: flex-start; /* Vertically align items at the top */
+  }
+  
 `;
 const FormStyle =styled.form`
     margin: 3rem 7rem 5rem 7rem;
@@ -147,6 +157,14 @@ const FormStyle =styled.form`
         transform: translate(100%,-50%);
     }
 
+    @media screen and (max-width:600px ){
+      margin: 2rem 3rem 2rem 3rem;
+    div{
+        width: 100% ;
+        position: relative;
+    }
+    }
+
 `
 const Header = styled.div`
   display: flex;
@@ -159,6 +177,21 @@ const Header = styled.div`
     border-radius: 2rem;
     background:linear-gradient(35deg,#494949,#393939) ;
     color: white
+  }
+  @media screen and (max-width:600px ){
+    display: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 1rem 1rem 0.5rem;
+
+    button{
+      display: inline-flex;
+      padding: 0.5rem 1rem;
+      border-radius: 2rem;
+      background:linear-gradient(35deg,#494949,#393939) ;
+      color: white;
+      font-size: 16px;
+    }
   }
 `
 export default Home;
